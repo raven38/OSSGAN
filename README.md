@@ -3,10 +3,6 @@
 
 ### Prepare envrioment
 
-Move to the project directory
-```
-cd code
-```
 
 To run the code, you need pytorch and some additional packages.
 ```
