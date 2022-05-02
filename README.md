@@ -89,10 +89,17 @@ python3 src/main.py -t -e -l -sync_bn -stat_otf --eval_type valid -c CONFIG_PATH
 
 
 ## License
-This repo is built on top of [StudioGAN][https://github.com/POSTECH-CVLab/PyTorch-StudioGAN]. 
+This repo is built on top of [StudioGAN](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN). 
 However, portions of the library are avaiiable under distinct license terms: StyleGAN2, StyleGAN2-ADA, and StyleGAN3 are licensed under [NVIDIA source code license](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN/blob/master/LICENSE-NVIDIA), Synchronized batch normalization is licensed under [MIT license](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN/blob/master/src/sync_batchnorm/LICENSE), HDF5 generator is licensed under [MIT license](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN/blob/master/src/utils/hdf5.py), differentiable SimCLR-style augmentations is licensed under [MIT license](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN/blob/master/src/utils/simclr_aug.py), and clean-FID is licensed under [MIT license](https://github.com/POSTECH-CVLab/PyTorch-StudioGAN/blob/master/src/utils/resize.py).
 
 ## Bibtex
 ```
-
+@misc{katsumata2022ossgan,
+      title={OSSGAN: Open-Set Semi-Supervised Image Generation}, 
+      author={Kai Katsumata and Duc Minh Vo and Hideki Nakayama},
+      year={2022},
+      eprint={2204.14249},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
