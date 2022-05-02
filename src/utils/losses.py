@@ -297,6 +297,11 @@ def calc_derv(inputs, labels, netD, conditional_strategy, device, netG=None):
     return gradients, gradients_norm
 
 
+# OSSGAN: https://github.com/raven38/OSSGAN
+# The MIT License (MIT)
+# See license file or visit https://github.com/raven38/OSSGAN for details
+
+
 class HLoss(nn.Module):
     def __init__(self):
         super(HLoss, self).__init__()

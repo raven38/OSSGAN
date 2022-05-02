@@ -104,7 +104,6 @@ class ConditionalHead(nn.Module):
 
         which_linear = snlinear if d_spectral_norm else linear
         which_embedding = sn_embedding if d_spectral_norm else embedding
-        which_embeddingent = snembeddingent if d_spectral_norm else embeddingent
 
         self.nonlinear_embed = nonlinear_embed
         self.normalize_embed = normalize_embed
@@ -121,23 +120,13 @@ class ConditionalHead(nn.Module):
             self.embedding = which_embedding(num_classes, hypersphere_dim)
         elif self.conditional_strategy in ['ProjGAN', 'Random']:
             self.embedding = which_embedding(num_classes, self.in_dim)
-            # self.embedding = which_linear(in_features=num_classes, out_features=self.in_dim)
-            # self.embedding1 = which_linear(in_features=num_classes, out_features=self.in_dim*2)
-            # self.embedding2 = which_linear(in_features=self.in_dim*2, out_features=self.in_dim)
-            # self.embedding = lambda x: self.embedding2(self.activation(self.embedding1(x)))
-            # self.embedding = which_embeddingent(num_classes, self.in_dim)
-            # self.embedding = nn.Sequential(which_linear(in_features=num_classes, out_features=self.in_dim*2, bias=False),
-            #                                which_linear(in_features=self.in_dim*2, out_features=self.in_dim, bias=False))
         elif self.conditional_strategy in ['Single']:
-            # self.embedding = which_embedding(num_classes+1, self.in_dim)
             self.embedding = nn.Sequential(which_linear(in_features=num_classes+1, out_features=self.in_dim*2),
                                            which_linear(in_features=self.in_dim*2, out_features=self.in_dim))
         elif self.conditional_strategy == 'ACGAN':
             self.linear4 = which_linear(in_features=self.in_dim, out_features=num_classes)
         elif self.conditional_strategy in ['SSGAN', 'OSSSGAN', 'Reject']:
             self.embedding = which_embedding(num_classes, self.in_dim)
-            # self.embedding = nn.Sequential(which_linear(in_features=num_classes, out_features=self.in_dim*2, bias=False),
-            #                                which_linear(in_features=self.in_dim*2, out_features=self.in_dim, bias=False))
             self.linear4 = which_linear(in_features=self.in_dim, out_features=num_classes)
         elif self.conditional_strategy in ['Open']:
             self.embedding = which_embedding(num_classes+1, self.in_dim)
@@ -179,10 +168,7 @@ class ConditionalHead(nn.Module):
 
         elif self.conditional_strategy == 'Single':
             authen_output = torch.squeeze(self.linear1(h))
-            # mask = (label_ == -1).int()
             label = torch.eye(self.num_classes + 1, device=label_.device)[label_]
-                                  # open_label = torch.eye(self.num_classes + 1, device=label_.device)[(torch.ones_like(label_)*self.num_classes).long()]
-            # label2 = label * (1 - mask).view(-1, 1) + open_label * mask.view(-1, 1)
             proj = torch.sum(torch.mul(self.embedding(label), h), 1)
             return proj + authen_output
 
@@ -195,7 +181,6 @@ class ConditionalHead(nn.Module):
             authen_output = torch.squeeze(self.linear1(h))
             cls_output = self.linear4(h)
             mask = (label_ == -1).int()
-            # label2 = label * (1 - mask).view(-1, 1) + torch.eye(self.num_classes, device=label_.device)[torch.argmax(cls_output, dim=1)] * mask.view(-1, 1)
             label2 = label * (1 - mask).view(-1, 1) + F.softmax(cls_output, dim=1) * mask.view(-1, 1)
             proj = torch.sum(torch.mul(self.embedding(label2.detach()), h), 1)
             return cls_output, proj + authen_output
@@ -230,9 +215,6 @@ class ConditionalHead(nn.Module):
             cls_output = self.linear4(h)
             mask = (label_ == -1).int()
             label2 = label * (1 - mask).view(-1, 1) + F.softmax(cls_output, dim=1) * mask.view(-1, 1)
-            # label2 = label * (1 - mask).view(-1, 1) + (F.softmax(cls_output, dim=1)*0.9 + (0.1/self.num_classes)) * mask.view(-1, 1)
-            # label smoothing
-            # label2 = label2*0.9 + (0.1/self.num_classes)
             proj = torch.sum(torch.mul(self.embedding(label2.detach()), h), 1)
             return cls_output, proj + authen_output
 

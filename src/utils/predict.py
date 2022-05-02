@@ -1,3 +1,10 @@
+# OSSGAN: https://github.com/raven38/OSSGAN
+# The MIT License (MIT)
+# See license file or visit https://github.com/raven38/OSSGAN for details
+
+# src/utils/predict.py
+
+
 def pred_dis_out(net, x, label_, conditional_strategy, evaluation=False):
     outputs = net(x, label_, evaluation=evaluation)
     if conditional_strategy in ['ContraGAN', "Proxy_NCA_GAN", "NT_Xent_GAN"]:

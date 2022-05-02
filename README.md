@@ -1,6 +1,6 @@
 # OSSGAN: Open-Set Semi-Supervised Image Generation
 ### [CVPR 2022] Official pytorch implementation
-
+[Paper](https://arxiv.org/abs/2204.14249)
 ### Prepare envrioment
 
 

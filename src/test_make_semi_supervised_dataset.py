@@ -1,3 +1,10 @@
+# OSSGAN: https://github.com/raven38/OSSGAN
+# The MIT License (MIT)
+# See license file or visit https://github.com/raven38/OSSGAN for details
+
+# src/test_make_semi_supervised_dataset.py
+
+
 import numpy as np
 
 from make_semi_supervised_dataset import osss_subset, ss_subset, class_filtered_dataset
